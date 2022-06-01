@@ -1,8 +1,10 @@
 package com.lab.shop;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@MapperScan("com.lab.shop.dao")
 @SpringBootApplication
 public class ShopApplication {
 
