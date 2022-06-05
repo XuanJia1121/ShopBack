@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		 http
          .authorizeRequests()
-         .antMatchers(HttpMethod.POST, "/api/shop/getAllPro/**").permitAll()
+         .antMatchers(HttpMethod.POST, "/api/shop/**").permitAll()
          .anyRequest().authenticated()
          .and()
          .cors()
