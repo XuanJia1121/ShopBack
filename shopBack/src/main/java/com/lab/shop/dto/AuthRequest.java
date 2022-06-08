@@ -3,8 +3,6 @@ package com.lab.shop.dto;
 import lombok.Data;
 
 @Data
-public class UserDTO {
-	
-	
+public class AuthRequest {
 	
 }
