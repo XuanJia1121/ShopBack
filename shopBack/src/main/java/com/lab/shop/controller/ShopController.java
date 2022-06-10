@@ -17,5 +17,5 @@ public class ShopController {
 	public String test2() {
 		return "Login success!";
 	}
-	
+	 
 }

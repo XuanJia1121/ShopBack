@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private AccessDeniedService accessDeniedService;
 	
 	/*
-	 *OAuth2 
+	 * OAuth2 
 	 */
 	@Autowired
 	private GoogleLoginFailService googleLoginFailService;
@@ -51,20 +51,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .authorizeRequests()
 	         .antMatchers(HttpMethod.GET,"/shop/noAuth/**").permitAll()
 	         .anyRequest().authenticated()
-	         .and()
+	      .and()
 	         .cors()
-	         .and()
+	      .and()
 	         .csrf().disable()
-         .formLogin()
+	         .formLogin()
+         	 .loginProcessingUrl("/auth/login.action")
 	         .usernameParameter("username")
 	         .passwordParameter("password")
 	         .successHandler(authSuccessService)
 	         .failureHandler(authFailService)
          .and()
-	         .logout()
+	     	 .logout()
 	         .logoutUrl("/auth/logout.action")
 	         .logoutSuccessHandler(logoutService)
-	         .logoutSuccessUrl("/noAuth/shop/home.action")
 	     .and()
 	         .oauth2Login()
 	         .failureHandler(googleLoginFailService)
