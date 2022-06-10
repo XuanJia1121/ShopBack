@@ -14,6 +14,7 @@ import com.lab.shop.service.AuthFailService;
 import com.lab.shop.service.AuthService;
 import com.lab.shop.service.AuthSuccessService;
 import com.lab.shop.service.GoogleLoginFailService;
+import com.lab.shop.service.GoogleLoginSuccessService;
 import com.lab.shop.service.LogoutService;
 
 @Configuration
@@ -43,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Autowired
 	private GoogleLoginFailService googleLoginFailService;
-	
+	@Autowired
+	private GoogleLoginSuccessService googleLoginSuccessService;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -67,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .logoutSuccessHandler(logoutService)
 	     .and()
 	         .oauth2Login()
+	         .successHandler(googleLoginSuccessService)
 	         .failureHandler(googleLoginFailService)
          .and()
          	.exceptionHandling().accessDeniedHandler(accessDeniedService);
