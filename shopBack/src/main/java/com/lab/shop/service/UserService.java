@@ -1,18 +1,29 @@
 package com.lab.shop.service;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserService implements UserDetailsService {
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lab.shop.domain.UserDomain;
+import com.lab.shop.mapper.UserMapper;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println(username);
-		return null;
-	} 
+@Service
+public class UserService {
 	
+	@Autowired
+	private UserMapper userMapper;
+	
+	public UserDomain selectByName(String username) {
+		QueryWrapper<UserDomain> userWrapper = new QueryWrapper<>();
+		userWrapper.eq("username", username);
+		Optional<UserDomain> authUser = Optional.ofNullable(userMapper.selectOne(userWrapper));
+		if (authUser.isPresent()) {
+			return authUser.get();
+		} else {
+			throw new UsernameNotFoundException("Username is wrong.");
+		}
+	}
 }

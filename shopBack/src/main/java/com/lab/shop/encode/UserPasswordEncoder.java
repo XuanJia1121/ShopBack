@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 
 public class UserPasswordEncoder implements PasswordEncoder {
 	
-	//不加密
 	@Override
 	public String encode(CharSequence rawPassword) {
 		return rawPassword.toString();
@@ -17,6 +16,5 @@ public class UserPasswordEncoder implements PasswordEncoder {
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
 		return StringUtils.equals(encodedPassword,rawPassword.toString());
 	}
-	
 	
 }
