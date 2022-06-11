@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		 http
 	         .authorizeRequests()
-	         .antMatchers(HttpMethod.GET,"/shop/noAuth/**").permitAll()
+	         .antMatchers(HttpMethod.POST,"/shop/noAuth/**").permitAll()
+	         .antMatchers(HttpMethod.GET,"/auth/googinLogin").permitAll()
 	         .anyRequest().authenticated()
 	      .and()
 	         .cors()
@@ -77,7 +78,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(authService).passwordEncoder(new UserPasswordEncoder());
+		auth
+			.userDetailsService(authService)
+			.passwordEncoder(new UserPasswordEncoder());
 	}
-
+	
 }
