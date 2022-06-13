@@ -54,25 +54,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .antMatchers(HttpMethod.POST,"/shop/noAuth/**").permitAll()
 	         .antMatchers(HttpMethod.GET,"/auth/googinLogin").permitAll()
 	         .anyRequest().authenticated()
-	      .and()
-	         .cors()
-	      .and()
-	         .csrf().disable()
+	         .and().cors()
+	         .and().csrf().disable();
+	     http
 	         .formLogin()
          	 .loginProcessingUrl("/auth/login.action")
 	         .usernameParameter("username")
 	         .passwordParameter("password")
 	         .successHandler(authSuccessService)
-	         .failureHandler(authFailService)
-         .and()
+	         .failureHandler(authFailService);
+	     http
 	     	 .logout()
 	         .logoutUrl("/auth/logout.action")
-	         .logoutSuccessHandler(logoutService)
-	     .and()
+	         .logoutSuccessHandler(logoutService);
+	     http
 	         .oauth2Login()
 	         .successHandler(googleLoginSuccessService)
-	         .failureHandler(googleLoginFailService)
-         .and()
+	         .failureHandler(googleLoginFailService);
+	     http
          	.exceptionHandling().accessDeniedHandler(accessDeniedService);
 	}
 
