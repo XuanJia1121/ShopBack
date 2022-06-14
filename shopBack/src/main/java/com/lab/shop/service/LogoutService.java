@@ -1,23 +1,19 @@
 package com.lab.shop.service;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogoutService implements LogoutSuccessHandler{
+public class LogoutService implements LogoutHandler {
 
 	@Override
-	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
+	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+		String username = request.getParameter("username");
+		request.getSession().removeAttribute(username);
 	}
-
+	
 }

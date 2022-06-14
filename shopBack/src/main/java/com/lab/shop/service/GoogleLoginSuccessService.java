@@ -41,7 +41,7 @@ public class GoogleLoginSuccessService implements AuthenticationSuccessHandler {
 		responseDto.setData(objectMapper.writeValueAsString(authRequest));
 		String dataStr = objectMapper.writeValueAsString(responseDto);
 		ResponseUtil.writeResponse(response,dataStr);
-		request.getSession().setAttribute("USER_INFO", objectMapper.writeValueAsString(dataStr));
+		request.getSession().setAttribute(String.format("%s_USER_INFO",authRequest.getUsername()), objectMapper.writeValueAsString(dataStr));
 	}
 	
 }

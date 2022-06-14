@@ -16,6 +16,7 @@ import com.lab.shop.service.AuthSuccessService;
 import com.lab.shop.service.GoogleLoginFailService;
 import com.lab.shop.service.GoogleLoginSuccessService;
 import com.lab.shop.service.LogoutService;
+import com.lab.shop.service.LogoutSucService;
 
 @Configuration
 @EnableWebSecurity
@@ -29,12 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthFailService authFailService;
 	@Autowired
-	private LogoutService logoutService;
+	private LogoutSucService logoutSucService;
 	@Autowired
 	private AuthService authService;
-	
+	@Autowired
+	private LogoutService logoutService;
 	/*
-	 * Exception 
+	 * Exception Handle
 	 */
 	@Autowired
 	private AccessDeniedService accessDeniedService;
@@ -51,11 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		 http
 	         .authorizeRequests()
-	         .antMatchers(HttpMethod.POST,"/shop/noAuth/**").permitAll()
+	         .antMatchers(HttpMethod.POST,"/noAuth/**").permitAll()
 	         .antMatchers(HttpMethod.GET,"/auth/googinLogin").permitAll()
 	         .anyRequest().authenticated()
 	         .and().cors()
 	         .and().csrf().disable();
+		 
 	     http
 	         .formLogin()
          	 .loginProcessingUrl("/auth/login.action")
@@ -63,15 +66,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .passwordParameter("password")
 	         .successHandler(authSuccessService)
 	         .failureHandler(authFailService);
+	     
 	     http
 	     	 .logout()
 	         .logoutUrl("/auth/logout.action")
-	         .logoutSuccessHandler(logoutService);
+	         .addLogoutHandler(logoutService)
+	         .logoutSuccessHandler(logoutSucService);
+	     
 	     http
 	         .oauth2Login()
 	         .successHandler(googleLoginSuccessService)
 	         .failureHandler(googleLoginFailService)
 	         .defaultSuccessUrl("http://localhost:8080/");
+	     
 	     http
          	.exceptionHandling().accessDeniedHandler(accessDeniedService);
 	}
