@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .oauth2Login()
 	         .successHandler(googleLoginSuccessService)
 	         .failureHandler(googleLoginFailService)
+	         .defaultSuccessUrl("http://localhost:8080/")
          .and()
          	.exceptionHandling().accessDeniedHandler(accessDeniedService);
 	}

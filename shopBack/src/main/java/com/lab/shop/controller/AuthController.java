@@ -6,18 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lab.shop.dto.AuthRequest;
 import com.lab.shop.dto.ResponseDto;
 import com.lab.shop.enums.ResponseEnum;
 import com.lab.shop.service.JWTService;
-import com.lab.shop.utils.ResponseUtil;
 
 @RequestMapping("/auth")
-@Controller
+@RestController
 public class AuthController {
 
 	@Autowired
@@ -26,7 +25,7 @@ public class AuthController {
 	private ObjectMapper objectMapper;
 	
 	@RequestMapping("/googleSuccess.action")
-	public void googleLoginSuccess(OAuth2AuthenticationToken authentication,HttpServletResponse response) throws Exception {
+	public String googleLoginSuccess(OAuth2AuthenticationToken authentication,HttpServletResponse response) throws Exception {
 		Map<String,Object> authMap = authentication.getPrincipal().getAttributes();
 		AuthRequest authRequest = new AuthRequest();
 		authRequest.setUsername((String)authMap.get("name"));
@@ -35,8 +34,7 @@ public class AuthController {
 		dto.setCode(ResponseEnum.LOGIN_SUC.getCode());
 		dto.setMsg(ResponseEnum.LOGIN_SUC.getMsg());
 		dto.setData(objectMapper.writeValueAsString(authRequest));
-		ResponseUtil.writeResponse(response, objectMapper.writeValueAsString(dto));
-		response.sendRedirect("http://localhost:8080/");
+		return objectMapper.writeValueAsString(dto);
 	}
 
 }

@@ -38,6 +38,8 @@ public class AuthSuccessService implements AuthenticationSuccessHandler {
 		responseDto.setCode(ResponseEnum.LOGIN_SUC.getCode());
 		responseDto.setMsg(ResponseEnum.LOGIN_SUC.getMsg());
 		responseDto.setData(objectMapper.writeValueAsString(req));
-		ResponseUtil.writeResponse(response,objectMapper.writeValueAsString(responseDto));
+		String dataStr = objectMapper.writeValueAsString(responseDto);
+		ResponseUtil.writeResponse(response,dataStr);
+		request.getSession().setAttribute("user_info",dataStr);
 	}
 }
