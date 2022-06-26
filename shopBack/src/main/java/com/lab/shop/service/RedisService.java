@@ -15,7 +15,6 @@ public class RedisService {
 	}
 	
 	public String getByKey(String key) {
-		System.out.println("get by db");
 		return stringRedisTemplate.opsForValue().get(key);
 	}
 	

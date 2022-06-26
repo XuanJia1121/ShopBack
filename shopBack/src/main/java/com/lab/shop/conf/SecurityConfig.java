@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	         .authorizeRequests()
 	         .antMatchers(HttpMethod.POST,"/noAuth/**").permitAll()
 	         .antMatchers(HttpMethod.GET,"/auth/googinLogin").permitAll()
+	         .antMatchers(HttpMethod.GET,"/test/**").permitAll()
 	         .anyRequest().authenticated()
 	         .and().cors()
 	         .and().csrf().disable();
