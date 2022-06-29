@@ -40,6 +40,5 @@ public class AuthSuccessService implements AuthenticationSuccessHandler {
 		responseDto.setData(objectMapper.writeValueAsString(req));
 		String dataStr = objectMapper.writeValueAsString(responseDto);
 		ResponseUtil.writeResponse(response,dataStr);
-		request.getSession().setAttribute(String.format("%s_USER_INFO",user.getUsername()),dataStr);
 	}
 }
